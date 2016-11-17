@@ -1,0 +1,22 @@
+.platform {
+    background: #000000;
+
+}
+.trampoline {
+    background: #AA0000;
+}
+
+.slow {
+    background: #00AA00;
+}
+
+.object {
+    position: absolute;
+}
+
+.preview {
+    position: relative;
+    height: 720px;
+    width: 1280px;
+    background-color: grey;
+}

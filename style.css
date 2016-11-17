@@ -1,0 +1,44 @@
+.level {
+    height: 720px;
+    width: 3840px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url('background.jpg');
+}
+.level .hero {
+    background: #222222;
+    position: absolute;
+    height: 100px;
+    width: 50px;
+}
+
+.platform {
+    background: #000000;
+    position: absolute;
+    background: url('dirt.png') 50px;
+    box-sizing: border-box;
+    border-style: inset;
+    border-width: 50px 0 0 0;
+    border-image-slice: 50 0 0 0;
+    border-image-repeat: repeat;
+    border-image-source: url('grass.png');
+}
+
+.trampoline {
+    background: #AA0000;
+    position: absolute;
+}
+
+.slow {
+    background: #00AA00;
+    position: absolute;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    overflow:hidden;
+}
