@@ -48,7 +48,7 @@ function loadLevel() {
         function getNumberArray(arr){
             var newArr = new Array();
             for(var i = 0; i < arr.length; i++){
-                if(typeof arr[i] == "number"){
+                if(typeof arr[i] === "number"){
                     newArr[newArr.length] = arr[i];
                 }
             }
@@ -122,7 +122,7 @@ function loadLevel() {
             //Move hero
             hero.style.left = currentPositionX + velocityX + "px";
             //Add friction to hero
-            if (velocityX != 0) { velocityX *= .9; }
+            if (velocityX !== 0) { velocityX *= 0.9; }
         }
 
         /*****************************
@@ -141,7 +141,8 @@ function loadLevel() {
         }
 
         function jump() {
-            if (velocityY == 0) {
+            if (grounded) {
+                grounded = false;
                 velocityY = -jumpHeight;
             }
         }
@@ -175,12 +176,34 @@ function loadLevel() {
                 //Check for collision with current velocity
                 //Check on X axis
                 if (isCollide(platform, velocityX, 0)) {
+                    var platformX = platform.getBoundingClientRect().left + window.scrollX;
+                    //Push player at exact position of collision edge
+                    if (velocityX > 0) {
+                        //If there's collision to right
+                        var platformLeftEdge = platformX - hero.offsetWidth;
+                        console.log ("Collide right:",currentPositionX," = ",platformLeftEdge);
+                        hero.style.left = platformLeftEdge + 'px';
+                    } else if (velocityX < 0) {
+                        //If there's collision to left
+                        var platformRightEdge = platformX + platform.offsetWidth;
+                        console.log ("Collide left:",currentPositionX,"=",platformRightEdge);
+                        hero.style.left = platformRightEdge + 'px';
+                    }
                     velocityX = 0;
+
+                    //Collision happened
                     collided = true;
                 }
                 //Check on Y axis
                 if (isCollide(platform,0, velocityY)) {
+                    var platformY = platform.getBoundingClientRect().top + window.scrollY;
+                    //If landed, allow to jump
+                    if (velocityY > 0) {
+                        grounded = true;
+                    }
                     velocityY = 0;
+
+                    //Collision happened
                     collided = true;
                 }
                 //If there was no collision on X and Y, check on diagonal
@@ -197,10 +220,11 @@ function loadLevel() {
                         case 'platform':
                             break;
                         case 'trampoline':
+                            grounded = false;
                             velocityY = - 12.5;
                             break;
                         case 'slow':
-                            velocityX *= .7;
+                            velocityX *= 0.7;
                             break;
                         default:
                             break;
