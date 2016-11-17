@@ -143,7 +143,6 @@ function loadLevel() {
         function jump() {
             if (velocityY == 0) {
                 velocityY = -jumpHeight;
-                hero.style.top = toNumber(hero.style.top) - 1 + 'px';
             }
         }
 
